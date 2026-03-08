@@ -1,0 +1,21 @@
+{
+  "name": "sales-location-es",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "tasks.max": "1",
+    "topics": "sales-location",
+    "connection.url": "http://localhost:9200",
+    
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://localhost:8081",
+    
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "schema.ignore": "false",
+    "type.name": "_doc",
+
+    "transforms": "addPipeline",
+    "transforms.addPipeline.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+    "transforms.addPipeline.static.field": "pipeline",
+    "transforms.addPipeline.static.value": "geo-enrich-pipeline"
+  }
+}
