@@ -1,0 +1,17 @@
+{
+  "namespace": "sales.dev.avro",
+  "type": "record",
+  "name": "CustomerEvent",
+  "fields": [
+    {"name": "customer_id", "type": "string"},
+    {"name": "first_name", "type": "string"},
+    {"name": "last_name", "type": "string"},
+    {"name": "email", "type": "string"},
+    {"name": "country", "type": "string"},
+    {"name": "city", "type": "string", "default": "Nairobi"},
+    {"name": "latitude", "type": "double", "default": 0.0},
+    {"name": "longitude", "type": "double", "default": 0.0},
+    {"name": "card_number", "type": ["null","string"], "default": null},
+    {"name": "timestamp", "type": {"type":"long","logicalType":"timestamp-millis"}}
+  ]
+}
