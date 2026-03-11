@@ -14,8 +14,8 @@ public class SalesProducer {
 
     public static void main(String[] args) throws Exception {
 
-            // Faker with Kenyan locale
-        Faker faker = new Faker(new Locale("en-KE"));
+        // Faker 
+        Faker faker = new Faker(new Locale("en")); 
 
         // Kenyan cities with lat/lon
         Map<String, double[]> kenyaCities = Map.ofEntries(
@@ -88,6 +88,7 @@ public class SalesProducer {
                 System.out.println("Created customer: " + customerId + " in " + city);
                 TimeUnit.MILLISECONDS.sleep(150);
             }
+            System.out.println("All customers created. Starting sales orders...");
         }
     }
 
