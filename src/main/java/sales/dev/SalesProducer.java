@@ -1,11 +1,23 @@
 package sales.dev;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.avro.specific.SpecificRecord;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
+import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import net.datafaker.Faker;
+import sales.dev.avro.CustomerEvent;
+import sales.dev.avro.SalesEvent;
 
 public class SalesProducer {
 
@@ -99,6 +111,40 @@ public class SalesProducer {
                 // Pick a city for delivery
                 String city = cities.get(faker.number().numberBetween(0, cities.size()));
                 double[] latLon = kenyaCities.get(city);
+
+                // Pick category & product
+                String category = new ArrayList<>(categoryProducts.keySet())
+                        .get(faker.number().numberBetween(0, categoryProducts.size()));
+                List<String> products = categoryProducts.get(category);
+                String productName = products.get(faker.number().numberBetween(0, products.size()));
+
+                SalesEvent order = new SalesEvent();
+                order.setOrderId(UUID.randomUUID().toString());
+                order.setCustomerId(customerId);
+                order.setProductId("PROD-" + faker.number().digits(6));
+                order.setProductName(productName);
+                order.setQuantity(faker.number().numberBetween(1, 8));
+
+                double minPrice = 100;
+                double maxPrice = 5000;
+                double price = minPrice + faker.random().nextDouble() * (maxPrice - minPrice);
+                order.setPrice(Math.round(price * 100.0) / 100.0);
+
+                order.setCountry("Kenya");
+                order.setCity(city);
+                order.setLatitude(latLon[0]);
+                order.setLongitude(latLon[1]);
+
+                order.setCardNumber(faker.finance().creditCard().replaceAll("\\D", ""));
+                order.setCategory(category);
+                order.setTimestamp(Instant.now());
+
+                producer.send(new ProducerRecord<>("sales-raw", order.getOrderId(), order));
+                double total = order.getPrice() * order.getQuantity();
+                System.out.printf("Order by %s in %s - KES %.2f (%s - %s)%n",
+                        customerId, city, total, category, productName);
+
+                TimeUnit.MILLISECONDS.sleep(faker.number().numberBetween(400, 3000));
             }
 
         }
