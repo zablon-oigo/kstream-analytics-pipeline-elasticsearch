@@ -27,7 +27,7 @@ public class SalesProducer {
     public static void main(String[] args) throws Exception {
 
         // Faker 
-        Faker faker = new Faker(new Locale("en")); 
+        Faker faker = new Faker(new Locale("en-US"));
 
         // Kenyan cities with lat/lon
         Map<String, double[]> kenyaCities = Map.ofEntries(
@@ -124,6 +124,9 @@ public class SalesProducer {
                 order.setProductId("PROD-" + faker.number().digits(6));
                 order.setProductName(productName);
                 order.setQuantity(faker.number().numberBetween(1, 8));
+
+                order.setFirstName(faker.name().firstName());
+                order.setLastName(faker.name().lastName());
 
                 double minPrice = 100;
                 double maxPrice = 5000;
