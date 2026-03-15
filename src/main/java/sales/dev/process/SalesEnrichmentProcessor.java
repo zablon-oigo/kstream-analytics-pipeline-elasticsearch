@@ -42,5 +42,20 @@ public class SalesEnrichmentProcessor {
                 maskedSales.selectKey(
                         (key, sale) -> sale.getCustomerId()
                 );
+              return salesByCustomer.join(
+                customers,
+                (sale, customer) -> {
+
+                    if (customer != null) {
+                        sale.setFirstName(customer.getFirstName());
+                        sale.setLastName(customer.getLastName());
+                    }
+
+                    return sale;
+                },
+                Joined.with(Serdes.String(),
+                        salesSerde,
+                        customerSerde)
+        );
     }
 }
