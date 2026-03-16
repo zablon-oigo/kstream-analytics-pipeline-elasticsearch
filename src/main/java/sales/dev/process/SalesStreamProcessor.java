@@ -46,6 +46,11 @@ public class SalesStreamProcessor {
                 sales, customers, serdeConfig
         );
 
+        enrichedSales.to(
+                "sales-enriched",
+                Produced.with(Serdes.String(), salesSerde)
+        );
+
     }
 
 }
