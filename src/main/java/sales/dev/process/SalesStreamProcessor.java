@@ -42,6 +42,10 @@ public class SalesStreamProcessor {
                 Consumed.with(Serdes.String(), customerSerde)
         );
 
+        KStream<String, SalesEvent> enrichedSales = SalesEnrichmentProcessor.enrichSales(
+                sales, customers, serdeConfig
+        );
+
     }
 
 }
