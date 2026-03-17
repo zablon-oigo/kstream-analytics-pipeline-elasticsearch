@@ -1,12 +1,9 @@
 package sales.dev.process;
 
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
@@ -50,6 +47,14 @@ public class SalesStreamProcessor {
                 "sales-enriched",
                 Produced.with(Serdes.String(), salesSerde)
         );
+        // Extract location
+        KStream<String, SalesEvent> salesLocation = SalesLocationProcessor.extractLocation(enrichedSales);
+        salesLocation.to(
+                "location",
+                Produced.with(Serdes.String(), salesSerde)
+        );
+
+        return builder.build();
 
     }
 
