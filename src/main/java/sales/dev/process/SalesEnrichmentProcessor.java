@@ -3,9 +3,7 @@ package sales.dev.process;
 import java.util.Map;
 
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.kstream.Joined;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.*;
 
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import sales.dev.avro.CustomerEvent;
@@ -25,37 +23,63 @@ public class SalesEnrichmentProcessor {
         SpecificAvroSerde<CustomerEvent> customerSerde = new SpecificAvroSerde<>();
         customerSerde.configure(serdeConfig, false);
 
+        // Step 1: Mask card 
         KStream<String, SalesEvent> maskedSales = sales.mapValues(sale -> {
 
-            String card = sale.getCardNumber();
+            SalesEvent maskedSale = new SalesEvent();
 
+            // copy fields
+            maskedSale.setCustomerId(sale.getCustomerId());
+            maskedSale.setProduct(sale.getProduct());
+            maskedSale.setAmount(sale.getAmount());
+            maskedSale.setLatitude(sale.getLatitude());
+            maskedSale.setLongitude(sale.getLongitude());
+
+            // mask card
+            String card = sale.getCardNumber();
             if (card != null && card.length() > 4) {
-                String masked = "XXXX-XXXX-XXXX-" +
-                        card.substring(card.length() - 4);
-                sale.setCardNumber(masked);
+                maskedSale.setCardNumber(
+                        "XXXX-XXXX-XXXX-" + card.substring(card.length() - 4)
+                );
+            } else {
+                maskedSale.setCardNumber(card);
             }
 
-            return sale;
+            return maskedSale;
         });
 
+        // Step 2: Re-key by customerId
         KStream<String, SalesEvent> salesByCustomer =
-                maskedSales.selectKey(
-                        (key, sale) -> sale.getCustomerId()
-                );
-              return salesByCustomer.join(
+                maskedSales.selectKey((key, sale) -> sale.getCustomerId());
+
+        // Step 3: Join and enrich
+        return salesByCustomer.join(
                 customers,
                 (sale, customer) -> {
 
+                    SalesEvent enriched = new SalesEvent();
+
+                    // copy sales data
+                    enriched.setCustomerId(sale.getCustomerId());
+                    enriched.setProduct(sale.getProduct());
+                    enriched.setAmount(sale.getAmount());
+                    enriched.setLatitude(sale.getLatitude());
+                    enriched.setLongitude(sale.getLongitude());
+                    enriched.setCardNumber(sale.getCardNumber());
+
+                    // add customer data
                     if (customer != null) {
-                        sale.setFirstName(customer.getFirstName());
-                        sale.setLastName(customer.getLastName());
+                        enriched.setFirstName(customer.getFirstName());
+                        enriched.setLastName(customer.getLastName());
                     }
 
-                    return sale;
+                    return enriched;
                 },
-                Joined.with(Serdes.String(),
+                Joined.with(
+                        Serdes.String(),
                         salesSerde,
-                        customerSerde)
+                        customerSerde
+                )
         );
     }
 }
