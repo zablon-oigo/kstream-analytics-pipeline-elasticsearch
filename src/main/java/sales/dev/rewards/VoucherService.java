@@ -23,5 +23,14 @@ public class VoucherService {
 
         return voucher;
     }
+
+    public boolean redeemVoucher(String voucher) {
+        String customer = jedis.get(voucher);
+        if (customer != null) {
+            jedis.del(voucher); 
+            return true;
+        }
+        return false; 
+    }
     
 }
