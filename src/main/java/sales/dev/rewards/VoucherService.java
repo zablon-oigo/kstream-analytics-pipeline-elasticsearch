@@ -11,5 +11,17 @@ public class VoucherService {
         this.jedis = new Jedis(redisHost, redisPort);
         this.ttlSeconds = ttlSeconds; 
     }
+
+
+    public String issueVoucher(String customerId) {
+        String voucher;
+        do {
+            voucher = VoucherGenerator.generateVoucher(8); 
+        } while (jedis.exists(voucher)); 
+
+        jedis.setex(voucher, ttlSeconds, customerId);
+
+        return voucher;
+    }
     
 }
