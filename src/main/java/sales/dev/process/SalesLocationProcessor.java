@@ -15,10 +15,12 @@ public class SalesLocationProcessor {
             LocationEvent location = new LocationEvent();
             location.setLatitude(sale.getLatitude());
             location.setLongitude(sale.getLongitude());
+
             if (sale.getTimestamp() != null) {
-                                Instant ts = Instant.parse(enrichedSales.getTimestamp().toString());
-                                location.setTimestamp(ts.toEpochMilli());
-                            }
+                Instant ts = Instant.parse(sale.getTimestamp().toString());
+                location.setTimestamp(ts.toEpochMilli());
+            }
+
             return location;
         });
     }
