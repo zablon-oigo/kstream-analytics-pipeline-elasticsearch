@@ -1,3 +1,8 @@
+#### Architecture Diagram
+
+<img width="1482" height="681" alt="mart" src="https://github.com/user-attachments/assets/e9e19a78-e0a9-4e7d-acb0-83826093c0eb" />
+
+
 Base Project
 ```sh
 mvn archetype:generate \
