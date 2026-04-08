@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "CountryCount",
+  "namespace": "sales.dev.avro",
+  "fields": [
+    {"name": "country", "type": "string"},
+    {"name": "count", "type": "long"}
+  ]
+}

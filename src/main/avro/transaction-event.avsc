@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "TransactionEvent",
+  "namespace": "sales.dev.avro",
+  "fields": [
+    {"name": "order_id", "type": "string"},
+    {"name": "customer_id", "type": "string"},
+    {"name": "product_id", "type": "string"},
+    {"name": "product_name", "type": ["null", "string"], "default": null},
+    {"name": "quantity", "type": "int"},
+    {"name": "price", "type": "double"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "card_masked", "type": "string"}
+  ]
+}

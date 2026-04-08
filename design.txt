@@ -1,0 +1,7 @@
+- Sales Event Simulator
+- Kafka Event Streaming
+- Schema Registry for data governance
+- Kafka Streams for real-time processing
+- Elasticsearch for search and analytics
+- Kibana for visualization
+- PostgreSQL for persistent storage

@@ -1,0 +1,25 @@
+{
+  "type": "record",
+  "name": "LocationEvent",
+  "namespace": "sales.dev.avro",
+  "fields": [
+    {
+      "name": "location",
+      "type": {
+        "type": "record",
+        "name": "GeoPoint",
+        "fields": [
+          { "name": "lat", "type": "double" },
+          { "name": "lon", "type": "double" }
+        ]
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

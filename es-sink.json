@@ -1,0 +1,34 @@
+{
+  "name": "es-sink",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+
+    "topics": "transactions-events",
+
+    "connection.url": "http://localhost:9200",
+
+    "type.name": "_doc",
+
+    "key.ignore": "true",
+
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://localhost:8081",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+
+    "schema.ignore": "true",
+
+    "topic.index.map": "transactions-events:sales-transactions",
+
+    "transforms": "flatten",
+
+    "transforms.flatten.type": "org.apache.kafka.connect.transforms.Flatten$Value",
+
+    "behavior.on.null.values": "ignore",
+    "write.method": "insert",
+
+    "errors.tolerance": "all",
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true"
+  }
+}

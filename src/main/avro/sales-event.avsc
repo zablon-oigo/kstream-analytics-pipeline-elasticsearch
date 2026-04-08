@@ -1,0 +1,23 @@
+{
+  "namespace": "sales.dev.avro",
+  "type": "record",
+  "name": "SalesEvent",
+  "fields": [
+    {"name": "order_id", "type": "string"},
+    {"name": "customer_id", "type": "string"},
+    {"name": "product_id", "type": "string"},
+    {"name": "timestamp", "type": {"type":"long","logicalType":"timestamp-millis"}},
+    {"name": "product_name", "type": "string"},
+    {"name": "quantity", "type": "int"},
+    {"name": "price", "type": "double"},
+    {"name": "category", "type": ["null", "string"], "default": null},
+    {"name": "country", "type": ["null","string"], "default": null},
+    {"name": "city", "type": ["null","string"], "default": null},
+    {"name": "latitude", "type": ["null","double"], "default": null},
+    {"name": "longitude", "type": ["null","double"], "default": null},
+    {"name": "card_number", "type": ["null","string"], "default": null},
+    {"name": "first_name", "type": ["null", "string"], "default": null},
+    {"name": "last_name", "type": ["null", "string"], "default": null},
+    {"name": "email", "type": ["null", "string"], "default": null}
+  ]
+}

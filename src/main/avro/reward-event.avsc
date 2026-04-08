@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "RewardEvent",
+  "namespace": "sales.dev.avro",
+  "fields": [
+    {"name": "customer_id", "type": "string"},
+    {"name": "total_spent", "type": "double"},
+    {"name": "email", "type":"string"},
+    {"name": "discount_percentage", "type": "double"},
+    {"name": "coupon_code", "type": "string"},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "CustomerEvent",
+  "namespace": "sales.dev.avro",
+  "fields": [
+    {"name": "customer_id", "type": "string"},
+    {"name": "first_name", "type": ["null", "string"], "default": null},
+    {"name": "last_name", "type": ["null", "string"], "default": null},
+    {"name": "country", "type": ["null", "string"], "default": null},
+    {"name": "email", "type": ["null", "string"], "default": null},
+    {"name": "city", "type": ["null", "string"], "default": null}
+  ]
+}
