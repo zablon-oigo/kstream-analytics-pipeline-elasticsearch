@@ -3,6 +3,10 @@
 
 #### Architecture Diagram
 
+<img width="1482" height="681" alt="mart" src="https://github.com/user-attachments/assets/191b653e-e163-47f7-9b8e-41d8b788930e" />
+
+
+<img width="841" height="361" alt="market" src="https://github.com/user-attachments/assets/152356db-931b-4b66-bf0a-af9d37a5ac18" />
 
 #### Prerequisites
 
