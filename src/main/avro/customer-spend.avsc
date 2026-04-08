@@ -1,9 +1,0 @@
-{
-  "namespace": "sales.dev.avro",
-  "type": "record",
-  "name": "CustomerSpend",
-  "fields": [
-    { "name": "email", "type": "string" },
-    { "name": "total_spend", "type": "double" }
-  ]
-}
