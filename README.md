@@ -30,7 +30,7 @@
 ### Project Setup
 
 
-Generate project using maven
+**Generate project using maven**
 
 If you want to start the project from scratch, use the Maven archetype:
 
@@ -45,7 +45,7 @@ mvn archetype:generate \
 
 ```
 
-Clone the repository
+**Clone the repository**
 
 ```sh
 git clone git@github.com:zablon-oigo/kstream-real-time-sales-analytics-pipeline-elasticsearch.git
@@ -53,7 +53,7 @@ git clone git@github.com:zablon-oigo/kstream-real-time-sales-analytics-pipeline-
 cd kstream-real-time-sales-analytics-pipeline-elasticsearch
 ```
 
-Generate avro classes
+**Generate avro classes**
 
 This project uses Avro schemas for data serialization. Generate the Java classes from the schemas:
 
@@ -61,10 +61,10 @@ This project uses Avro schemas for data serialization. Generate the Java classes
 mvn clean generate-sources
 ```
 
-Build the Project
+**Build the Project**
 
 
-Compile the application:
+Compile the application
 
 ```sh
 mvn clean install
@@ -76,7 +76,7 @@ mvn clean install
 mvn exec:java -Dexec.mainClass=mart.App
 ```
 
-Run Kafka Streams Applications
+**Run Kafka Streams Applications**
 
 ```sh
 # In different tabs 
@@ -87,7 +87,7 @@ mvn exec:java -Dexec.mainClass=mart.LocationProcessor
 
 #### Verify Kafka Topics
 
-List topics
+**List topics**
 
 ```sh
 kafka-topics.sh --list --bootstrap-server localhost:9095 
@@ -146,14 +146,14 @@ curl -X POST http://localhost:8083/connectors \
 
 ### Elasticsearch Operations
 
-List Index
+**List available Index**
 
 ```sh
 curl localhost:9200/_cat/indices?v
 
 ```
 
-View Index Mapping
+**View Index Mapping**
 
 ```sh
 curl localhost:9200/location-events/_mapping?pretty
@@ -161,7 +161,8 @@ curl localhost:9200/location-events/_mapping?pretty
 ```
 
 
-Create Geo Mapping
+**Create Geo Mapping**
+
 ```sh
 curl -X PUT localhost:9200/location-events -H "Content-Type: application/json" -d '
 {
@@ -178,7 +179,8 @@ curl -X PUT localhost:9200/location-events -H "Content-Type: application/json" -
 }'
 ```
 
-Transactions Index Mapping
+**Transactions Index Mapping**
+
 ```sh
 curl -X PUT "http://localhost:9200/transactions" -H "Content-Type: application/json" -d '
 {
@@ -198,7 +200,7 @@ curl -X PUT "http://localhost:9200/transactions" -H "Content-Type: application/j
   }
 }'
 ```
-Delete an index
+**Delete an index**
 
 ```sh
 curl -X DELETE localhost:9200/location-events
@@ -329,7 +331,7 @@ curl -X GET localhost:9200/location-events/_search -H "Content-Type: application
 
 ```
 
-##### Aggregations
+#### Aggregations
 
 **Sales per country**
 
