@@ -1,5 +1,25 @@
+### Real-Time Analytics Pipeline with KStreams, Elasticsearch & PostgreSQL
+
+![Java](https://img.shields.io/badge/Java-17+-orange?logo=java&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.8+-C71A36?logo=apache-maven&logoColor=white)
+![Kafka](https://img.shields.io/badge/Apache%20Kafka-4.0-black?logo=apache-kafka&logoColor=white)
+![Kafka Connect](https://img.shields.io/badge/Kafka%20Connect-Compatible-black?logo=apache-kafka&logoColor=white)
+![Schema Registry](https://img.shields.io/badge/Schema%20Registry-Latest-003366)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-336791?logo=postgresql&logoColor=white)
+![Elasticsearch](https://img.shields.io/badge/Elasticsearch-7.x%20%7C%208.x-005571?logo=elasticsearch&logoColor=white)
+![Kibana](https://img.shields.io/badge/Kibana-Matching%20Version-E8478B?logo=kibana&logoColor=white)
+![HTTPie](https://img.shields.io/badge/HTTPie-Latest-73DC8C?logo=httpie&logoColor=black)
+![curl](https://img.shields.io/badge/curl-Latest-073551)
+![jq](https://img.shields.io/badge/jq-Latest-5A5A5A)
 
 
+This project implements a real-time analytics pipeline that processes and enriches sales events using Kafka Streams. Incoming transaction data is streamed, transformed, and routed to multiple systems for analytics, storage, and customer engagement.
+
+Apache Kafka Streams (KStreams) is used to process sales records in real time, applying business logic such as reward qualification. Processed events are then indexed into Elasticsearch, enabling fast queries and geolocation-based insights, which are visualized live using Kibana to show sales activity as it happens.
+
+To drive customer engagement, high-value transactions (above 5000) trigger reward notifications via Mailtrap, offering discounts to encourage repeat purchases and increased clickstream activity.
+
+For persistence and downstream analytics, processed data is streamed into PostgreSQL using Kafka Connect sink connectors. Data consistency and schema evolution are managed through Confluent Schema Registry, ensuring reliable data governance across the pipeline.
 
 #### Architecture Diagram
 
