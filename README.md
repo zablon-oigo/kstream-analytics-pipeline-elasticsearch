@@ -146,6 +146,13 @@ curl -X POST http://localhost:8083/connectors \
 
 ### Elasticsearch Operations
 
+List Index
+
+```sh
+curl localhost:9200/_cat/indices?v
+
+```
+
 View Index Mapping
 
 ```sh
@@ -196,6 +203,112 @@ Delete an index
 ```sh
 curl -X DELETE localhost:9200/location-events
 ```
+
+Check Index has data
+
+```sh
+curl -X GET localhost:9200/transactions/_count | jq
+```
+Inspect sample document
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "size": 5,
+  "query": {
+    "match_all": {}
+  }
+}' | jq
+
+```
+
+Full-Text Search
+```sh
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "match": {
+      "product_name": "iphone"
+    }
+  }
+}'
+```
+
+Exact Match
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "term": {
+      "country": "Kenya"
+    }
+  }
+}
+'
+
+```
+
+Combine Multiple Conditions
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "product_name": "iphone" } }
+      ],
+      "filter": [
+        { "term": { "country": "Kenya" } }
+      ]
+    }
+  }
+}'
+
+```
+
+Range Queries
+
+```sh
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "range": {
+      "price": {
+        "gte": 100,
+        "lte": 500
+      }
+    }
+  }
+}
+'
+
+```
+
+
+Time filter
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "range": {
+      "timestamp": {
+        "gte": "now-7d/d",
+        "lte": "now"
+      }
+    }
+  }
+}'
+
+
+```
+
 
 ### Schema Registry
 
