@@ -308,7 +308,86 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 
 
 ```
+#### Geo Search
 
+Find transactions within a radius:
+
+```sh
+curl -X GET localhost:9200/location-events/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "geo_distance": {
+      "distance": "10km",
+      "location": {
+        "lat": -1.286389,
+        "lon": 36.817223
+      }
+    }
+  }
+}'
+
+```
+
+Aggregations
+
+Sales per country
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "size": 0,
+  "aggs": {
+    "sales_by_country": {
+      "terms": {
+        "field": "country"
+      }
+    }
+  }
+} '
+
+```
+
+
+Revenue per product
+
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "size": 0,
+  "aggs": {
+    "products": {
+      "terms": {
+        "field": "product_name.keyword"
+      },
+      "aggs": {
+        "total_revenue": {
+          "sum": {
+            "field": "price"
+          }
+        }
+      }
+    }
+  }
+} '
+
+```
+Autocomplete
+
+```sh
+
+curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
+{
+  "query": {
+    "match_phrase_prefix": {
+      "product_name": "iph"
+    }
+  }
+} '
+
+```
 
 ### Schema Registry
 
@@ -320,7 +399,7 @@ View Latest Schema
 curl -s http://localhost:8081/subjects/sales-events-value/versions/latest | jq '.schema | fromjson'
 ```
 
-# Check the schema for location-events
+#### Check the schema for location-events
 ```sh
 curl -s http://localhost:8081/subjects/location-events-value/versions/latest | jq '.schema | fromjson'
 ```
