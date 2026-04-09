@@ -204,12 +204,12 @@ Delete an index
 curl -X DELETE localhost:9200/location-events
 ```
 
-Check Index has data
+**Check Index has data**
 
 ```sh
 curl -X GET localhost:9200/transactions/_count | jq
 ```
-Inspect sample document
+**Inspect sample document**
 
 ```sh
 
@@ -223,7 +223,8 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 
 ```
 
-Full-Text Search
+**Full-Text Search**
+
 ```sh
 curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
 {
@@ -235,7 +236,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 }'
 ```
 
-Exact Match
+**Exact Match**
 
 ```sh
 
@@ -251,7 +252,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 
 ```
 
-Combine Multiple Conditions
+**Combine Multiple Conditions**
 
 ```sh
 
@@ -271,7 +272,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 
 ```
 
-Range Queries
+**Range Queries**
 
 ```sh
 curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/json" -d '
@@ -290,7 +291,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 ```
 
 
-Time filter
+**Time filter**
 
 ```sh
 
@@ -328,9 +329,9 @@ curl -X GET localhost:9200/location-events/_search -H "Content-Type: application
 
 ```
 
-Aggregations
+##### Aggregations
 
-Sales per country
+**Sales per country**
 
 ```sh
 
@@ -349,7 +350,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 ```
 
 
-Revenue per product
+**Revenue per product**
 
 
 ```sh
@@ -374,7 +375,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 } '
 
 ```
-Autocomplete
+**Autocomplete**
 
 ```sh
 
@@ -392,7 +393,7 @@ curl -X GET localhost:9200/transactions/_search -H "Content-Type: application/js
 ### Schema Registry
 
 
-View Latest Schema
+**View Latest Schema**
 
 
 ```sh
@@ -408,25 +409,28 @@ curl -s http://localhost:8081/subjects/location-events-value/versions/latest | j
 #### Kafka Connect Management
 
 
-List Connector Plugins
+**List Connector Plugins**
+
 ```sh
 curl -s localhost:8083/connector-plugins | jq '.[].class'
 ```
 
-Check Connector Status
+**Check Connector Status**
 
 ```sh
 curl http://localhost:8083/connectors/sales-location-es/status | jq
 ```
 
-Restart Connector
+**Restart Connector**
 
 ```sh
 
 curl -X POST localhost:8083/connectors/sales-location-es/restart
 
 ```
-Delete Connector
+
+**Delete Connector**
+
 ```sh
 curl -X DELETE http://localhost:8083/connectors/sales-location-es
 
