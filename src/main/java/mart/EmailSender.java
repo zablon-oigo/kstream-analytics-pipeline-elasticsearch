@@ -45,7 +45,7 @@ public class EmailSender {
             String body = "Hello,\n\n" +
                     "Congratulations! You just earned a 10% discount coupon.\n\n" +
                     "Coupon Code: " + couponCode + "\n\n" +
-                    "Thank you for shopping with us!\n";
+                    "Thank you for shopping with us.\n";
 
             message.setText(body);
 

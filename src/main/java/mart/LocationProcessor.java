@@ -45,10 +45,10 @@ public class LocationProcessor {
                         Consumed.with(Serdes.String(), salesSerde)
                 )
                 .peek((key, value) ->
-                        System.out.println("RAW INPUT => key=" + key + ", value=" + value)
+                        System.out.println("RAW INPUT: key=" + key + ", value=" + value)
                 );
 
-        // Transformation (explicit typing fixes inference issues)
+        // Transformation 
         KStream<String, LocationEvent> locationStream =
                 sales.mapValues((ValueMapper<SalesEvent, LocationEvent>) sale -> {
 
@@ -67,7 +67,7 @@ public class LocationProcessor {
                     return locationEvent;
                 })
                 .peek((k, v) ->
-                        System.out.println("LOCATION EVENT => " + v)
+                        System.out.println("LOCATION EVENT: " + v)
                 );
 
         // Sink topic
@@ -85,7 +85,7 @@ public class LocationProcessor {
 
         Properties props = new Properties();
 
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kmart-streams");
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kmart-location-streams");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9095");
 
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG,
@@ -116,7 +116,7 @@ public class LocationProcessor {
         });
 
         streams.setStateListener((newState, oldState) ->
-                System.out.println("State changed: " + oldState + " → " + newState)
+                System.out.println("State changed: " + oldState + "  :  " + newState)
         );
 
         streams.start();

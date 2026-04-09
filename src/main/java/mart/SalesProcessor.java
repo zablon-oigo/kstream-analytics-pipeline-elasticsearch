@@ -22,16 +22,16 @@ public class SalesProcessor {
         props.put("bootstrap.servers", "localhost:9095");
         props.put("schema.registry.url", schemaRegistryUrl);
 
-        // ✅ Create StreamsBuilder (NOT Topology directly)
+        // Create StreamsBuilder
         StreamsBuilder builder = new StreamsBuilder();
 
-        // ✅ Pass builder to modules
+        // Pass builder to modules
         CustomerStream.build(builder, schemaRegistryUrl);
         TransactionStream.build(builder, schemaRegistryUrl);
         AggregationStream.build(builder, schemaRegistryUrl);
         RewardStream.build(builder, schemaRegistryUrl);
 
-        // ✅ Build topology AFTER wiring everything
+        // Build topology AFTER wiring everything
         Topology topology = builder.build();
 
         System.out.println("TOPOLOGY:");
@@ -43,6 +43,6 @@ public class SalesProcessor {
 
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
-        System.out.println("✅ Application started");
+        System.out.println("Application started");
     }
 }
